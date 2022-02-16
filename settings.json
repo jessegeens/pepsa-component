@@ -1,0 +1,10 @@
+
+{
+    "@context": [
+      "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.1/components/context.jsonld",
+      { "pepsa-component": "urn:pepsa-component:default:" }
+    ],
+    "import": [
+      "files-pc:config/config.json"
+    ]
+  }

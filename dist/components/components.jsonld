@@ -1,0 +1,11 @@
+{
+  "@context": [
+    "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.1/components/context.jsonld"
+  ],
+  "@id": "npmd:pepsa-component",
+  "@type": "Module",
+  "requireName": "pepsa-component",
+  "import": [
+    "pc:^0.0.1/dist/TestHandler.jsonld"
+  ]
+}
