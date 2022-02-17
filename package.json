@@ -1,6 +1,6 @@
 {
   "name": "pepsa-component",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A componentsjs component to run the PePSA middleware on the solid community server",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -14,12 +14,12 @@
   "lsd:module": "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component",
   "lsd:components": "dist/components/components.jsonld",
   "lsd:contexts": {
-    "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.1/components/context.jsonld": "dist/components/context.jsonld"
+    "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.3/components/context.jsonld": "dist/components/context.jsonld"
   },
   "lsd:importPaths": {
-    "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.1/components/": "dist/components/",
-    "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.1/config/": "config/",
-    "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.1/dist/": "dist/"
+    "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.3/components/": "dist/components/",
+    "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.3/config/": "config/css-configs/",
+    "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.3/dist/": "dist/"
   },
   "scripts": {
     "build": "npm run build:ts && npm run build:components",

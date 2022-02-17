@@ -1,6 +1,6 @@
 {
     "@context": [
-        "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.2/components/context.jsonld",
+        "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.3/components/context.jsonld",
         "https://linkedsoftwaredependencies.org/bundles/npm/@solid/community-server/^2.0.0/components/context.jsonld",
         {
           "pepsa-component": "urn:pepsa-component:default:",
