@@ -1,6 +1,6 @@
 {
   "name": "pepsa-component",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A componentsjs component to run the PePSA middleware on the solid community server",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -29,6 +29,7 @@
     "prepare": "npm run build"
   },
   "devDependencies": {
+    "@tsconfig/node12": "^1.0.9",
     "componentsjs-generator": "^2.6.1",
     "gts": "^3.1.0",
     "typescript": "^4.5.5"

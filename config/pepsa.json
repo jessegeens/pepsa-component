@@ -1,0 +1,19 @@
+{   
+    "serverSettings": {
+        "port": 3000,
+        "serverRoot": "localhost",
+        "logLevel": "debug",
+        "protocol": "https",
+        "cert": "certs/cert.pem",
+        "privKey": "certs/key.pem"
+    },
+    "userPreferences": [
+        {
+            "incomingWebId": "https://jesse.localhost:3000/",
+            "forwardWebId": "http://localhost:3002/jesse/",
+            "privacyPreferences": {
+                "default": 4
+            }
+        }
+    ]
+}
