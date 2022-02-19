@@ -18,7 +18,7 @@
   },
   "lsd:importPaths": {
     "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.4/components/": "dist/components/",
-    "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.4/config/": "config/css-configs/",
+    "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.4/config/": "config/",
     "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.4/dist/": "dist/"
   },
   "scripts": {

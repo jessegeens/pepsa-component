@@ -42,7 +42,7 @@ export interface AuthorizingHttpHandlerArgs {
  *  - Reading the allowed permissions for the credentials.
  *  - Validating if this operation is allowed.
  */
-export class AuthorizingHttpHandler extends OperationHttpHandler {
+export class CustomAuthorizingHttpHandler extends OperationHttpHandler {
   private readonly logger = getLoggerFor(this);
 
   private readonly credentialsExtractor: CredentialsExtractor;

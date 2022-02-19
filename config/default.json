@@ -15,15 +15,14 @@
       "files-scs:config/http/middleware/websockets.json",
       "files-scs:config/http/server-factory/websockets.json",
       "files-scs:config/http/static/default.json",
-      "files-pc:config/identity/access/public.json",
       "files-scs:config/identity/email/default.json",
-      "files-pc:config/identity/handler/default.json",
+      "files-scs:config/identity/handler/default.json",
       "files-scs:config/identity/ownership/token.json",
       "files-scs:config/identity/pod/static.json",
       "files-scs:config/identity/registration/enabled.json",
       "files-scs:config/ldp/authentication/dpop-bearer.json",
       "files-scs:config/ldp/authorization/webacl.json",
-      "files-pc:config/ldp/handler/default.json",
+      "files-scs:config/ldp/handler/default.json",
       "files-scs:config/ldp/metadata-parser/default.json",
       "files-scs:config/ldp/metadata-writer/default.json",
       "files-scs:config/ldp/modes/default.json",
@@ -40,7 +39,13 @@
     ],
     "@graph": [
         {
-          "comment": "The main entry point into the main Solid behaviour."
+          "comment": "Allow everyone to register new pods.",
+          "@id": "urn:pepsa-component:default:IdentityProviderAuthorizingHandler",
+          "AuthorizingHttpHandler:_args_permissionReader": {
+            "@type": "AllStaticReader",
+            "allow": true
+          }
         }
       ]
   }
+  
