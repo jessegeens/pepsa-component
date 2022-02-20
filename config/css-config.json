@@ -39,30 +39,30 @@
         "files-scs:config/util/variables/default.json"
     ],
     "@graph": [
-        {
-            "comment": "All of these will always be executed on any incoming request. These are mostly used for adding response headers.",
-            "@id": "urn:solid-server:default:Middleware",
-            "@type": "SequenceHandler",
-            "handlers": [
-              {
-                "comment": "These handlers can be executed in any order.",
-                "@id": "urn:solid-server:default:ParallelMiddleware",
-                "@type": "ParallelHandler",
-                "handlers": [
-                  { "@id": "urn:solid-server:default:Middleware_Header" },
-                  { "@id": "urn:solid-server:default:Middleware_WebSocket" }
-                ]
-              },
-              {
-                  "comment": "Executes the PePSA TestHandler",
-                  "@id": "pepsa-component:TestHandler",
-                  "@type": "TestHandler"
-              },
-              {
-                "comment": "CORS has to be last since it can close the connection.",
-                "@id": "urn:solid-server:default:Middleware_Cors"
-              }
-            ]
+      {
+        "comment": "The main entry point into the main Solid behaviour.",
+        "@id": "urn:solid-server:default:LdpHandler",
+        "@type": "ParsingHttpHandler",
+        "args_requestParser": { "@id": "urn:solid-server:default:RequestParser" },
+        "args_metadataCollector": { "@id": "urn:solid-server:default:OperationMetadataCollector" },
+        "args_errorHandler": { "@id": "urn:solid-server:default:ErrorHandler" },
+        "args_responseWriter": { "@id": "urn:solid-server:default:ResponseWriter" },
+        "args_operationHandler": {
+          "@type": "AnonymizingHttpHandler",
+          "args_credentialsExtractor": { "@id": "urn:solid-server:default:CredentialsExtractor" },
+          "args_modesExtractor": { "@id": "urn:solid-server:default:ModesExtractor" },
+          "args_permissionReader": { "@id": "urn:solid-server:default:PermissionReader" },
+          "args_authorizer": { "@id": "urn:solid-server:default:Authorizer" },
+          "args_operationHandler": { "@id": "urn:solid-server:default:OperationHandler" },
+          "args_dataTreatmentHandler": {
+            "@id": "urn:pepsa-component:default:DataTreatmentHandler",
+            "@type": "DataTreatmentHandler"
+          },
+          "args_configurationManager": {
+            "@id": "urn:pepsa-component:default:ConfigurationManager",
+            "@type": "ConfigurationManager"
           }
+        }
+      }
     ]
 }

@@ -1,3 +1,6 @@
 node_modules/
 solid-store/
 dist/
+.internal/
+jesse/
+componentsjs-error-state.json

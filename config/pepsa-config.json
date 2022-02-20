@@ -1,0 +1,10 @@
+{   
+    "userPreferences": [
+        {
+            "webId": "http://localhost:3000/jesse/profile/card#me",
+            "privacyPreferences": {
+                "default": 4
+            }
+        }
+    ]
+}

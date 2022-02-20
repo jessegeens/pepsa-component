@@ -1,0 +1,29 @@
+{
+    "schemeName": "TCXActivity",
+     "detector": {
+         "contentRepresentation": "xml",
+         "scheme": "https://www8.garmin.com/xmlschemas/TrainingCenterDatabasev2",
+         "mechanism": {
+             "mechanismName": "filenameContains",
+             "value": ".tcx"
+         } },
+     "transformations":[ {
+         "level": 3,
+         "tactics": [ {
+             "field": "AverageHeartRateBpm",
+               "fieldType": "integer",
+               "transformation": {
+                 "transformationName": "remove"
+             }
+         }, {
+             "field": "Cadence",
+               "fieldType": "integer",
+               "transformation": {
+                 "transformationName": "numAggregation",
+                   "aggregationBounds": 10
+             }
+         } ]
+       }
+     ]
+ }
+ 
