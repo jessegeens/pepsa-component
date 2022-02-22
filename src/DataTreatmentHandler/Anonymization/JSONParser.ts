@@ -1,9 +1,9 @@
 import { EncapsulatedData } from "../EncapsulatedData";
 import { TacticParser } from "./TacticParser";
 import { PrivacyTacticRule } from "../../ConfigurationManager/PrivacyTactic";
-import { getLoggerFor, Logger } from "@solid/community-server";
 import { InvalidRuleError } from "../../Errors/InvalidRuleError";
 import { UnimplementedError } from "../../Errors/UnimplementedError";
+import jp from "jsonpath";
 
 export class JSONParser extends TacticParser {
   parseTactics(data: EncapsulatedData): string {
