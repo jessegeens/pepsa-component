@@ -1,4 +1,4 @@
 export enum ContentRepresentation {
-  JSON,
-  XML,
+  JSON = "json",
+  XML = "xml",
 }

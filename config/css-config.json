@@ -56,7 +56,8 @@
           "args_operationHandler": { "@id": "urn:solid-server:default:OperationHandler" },
           "args_dataTreatmentHandler": {
             "@id": "urn:pepsa-component:default:DataTreatmentHandler",
-            "@type": "DataTreatmentHandler"
+            "@type": "DataTreatmentHandler",
+            "configMgr": { "@id": "urn:pepsa-component:default:ConfigurationManager" }
           },
           "args_configurationManager": {
             "@id": "urn:pepsa-component:default:ConfigurationManager",

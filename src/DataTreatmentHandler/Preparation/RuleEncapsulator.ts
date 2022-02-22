@@ -5,6 +5,7 @@ import { UserPreference } from "../../ConfigurationManager/UserPreference";
 import { NoSuchDataSchemeError } from "../../Errors/NoSuchDataSchemeError";
 import { NoRulesForSchemeError } from "../../Errors/NoRulesForLevelError";
 import { UnimplementedError } from "../../Errors/UnimplementedError";
+import { getLoggerFor, Logger } from "@solid/community-server";
 
 /**
  * The RuleEncapsulator is responsible for asking the {@link ConfigurationManager}
@@ -15,28 +16,31 @@ import { UnimplementedError } from "../../Errors/UnimplementedError";
  * {@link TacticParser} to complete its work.
  */
 export class RuleEncapsulator {
-  configMgr: ConfigurationManager;
+  private readonly configMgr: ConfigurationManager;
+  private readonly log: Logger;
 
-  constructor() {
-    // TODO use dependency injection here
-    this.configMgr = new ConfigurationManager();
+  constructor(configMgr: ConfigurationManager) {
+    this.configMgr = configMgr;
+    this.log = getLoggerFor(this);
   }
 
   encapsulate(
     dataScheme: string,
     privacyPrefs: PrivacyPreferences
   ): Transformation {
-    let privacyLevel = Array.from(privacyPrefs.schemes.keys()).includes(
-      dataScheme
-    )
-      ? privacyPrefs.schemes.get(dataScheme)!
-      : privacyPrefs.default;
+    let privacyLevel =
+      privacyPrefs.schemes == undefined
+        ? privacyPrefs.default
+        : Array.from(privacyPrefs.schemes?.keys()).includes(dataScheme)
+        ? privacyPrefs.schemes.get(dataScheme)!
+        : privacyPrefs.default;
+    this.log.warn(`Privacy level is ${privacyLevel}`);
     let schemeRules = this.configMgr
       .getSchemeRules()
       .find((rule) => rule.schemeName == dataScheme);
     if (schemeRules === undefined)
       throw new NoSuchDataSchemeError(
-        `No scheme rules have been loaded for dataScheme${dataScheme}`
+        `No scheme rules have been loaded for dataScheme ${dataScheme}`
       );
     let transformation = schemeRules.transformations.find(
       (transformation) => transformation.level == privacyLevel
@@ -45,6 +49,6 @@ export class RuleEncapsulator {
       throw new NoRulesForSchemeError(
         `In scheme ${dataScheme}, no rules have been defined for level ${privacyLevel}`
       );
-    throw new UnimplementedError("encapsulate is not implemented");
+    return transformation;
   }
 }

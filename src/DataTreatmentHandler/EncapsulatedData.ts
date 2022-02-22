@@ -1,9 +1,9 @@
-import {Transformation} from "../ConfigurationManager/PrivacyTactic";
-import {ContentRepresentation} from "./ContentRepresentation";
+import { Transformation } from "../ConfigurationManager/PrivacyTactic";
+import { ContentRepresentation } from "./ContentRepresentation";
 
 export interface EncapsulatedData {
-  rawData: String;
+  rawData: string;
   contentRepresentation: ContentRepresentation;
-  dataScheme: String;
+  dataScheme: string;
   transformation: Transformation;
 }

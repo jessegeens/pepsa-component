@@ -16,9 +16,16 @@ export interface PrivacyTacticRule {
  *
  * The actual transformations are done by the {@link TacticParser}
  */
-export type PrivacyTactic =
-  | {
-      transformationName: string;
-      pseudonym: string;
-    }
-  | undefined;
+export type PrivacyTactic = {
+  transformationName: TransformationName;
+  pseudonym?: string;
+  equalsCondition: string[];
+  aggregationBounds: number;
+};
+
+export type TransformationName =
+  | "remove"
+  | "pseudonymization"
+  | "numAggregation"
+  | "strAggregation"
+  | "random";

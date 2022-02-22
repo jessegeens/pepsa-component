@@ -1,4 +1,8 @@
 import { PrivacyPreferences } from "./PrivacyPreferences";
+import {
+  UnsupportedContentRepresentationError,
+  NoSuchDataSchemeError,
+} from "../Errors/Errors";
 
 /**
  * Describes the preferences of a single user
@@ -6,17 +10,15 @@ import { PrivacyPreferences } from "./PrivacyPreferences";
  * @interface UserPreference
  * @field {string} `incomingWebId` contains a URI on which the server should listen
  * to incoming requests
- * @field {string} `forwardWebId` contains a URI to which requests are forwarded
- * to retrieve data
- * @field {string} `username` the user's username to authenticate himself on the
- * solid server specified by `forwardWebId`
- * @field {string} `password` the user's password to authenticate himself on the
- * solid server specified by `forwardWebId`
+ * @field {boolean} `strict` if `true` then data for which no data scheme or
+ * content representation is found will not be exported, instead a {@link NoSuchDataSchemeError}
+ * or {@link UnsupportedContentRepresentationError} will be thrown
  * @field {PrivacyPreferences} `privacyPreferences` contains the user's
  * {@link PrivacyPreferences}
  */
 export interface UserPreference {
   webId: string;
+  strict: boolean;
   privacyPreferences: PrivacyPreferences;
 }
 

@@ -19,6 +19,10 @@
 					"description": "The WebID to which requests will be sent, e.g. https://proxy.geens.cloud/jesse/card#me",
 					"type": "string"
 				},
+				"strict": {
+					"description": "Allow exporting data for which no scheme is found",
+					"type": "boolean"
+				},
 				"privacyPreferences": {
 					"description": "Describes the privacy settings of the user, i.e. which privacy levels are requested",
 					"type": "object",
@@ -39,7 +43,7 @@
 					"required": ["default"]
 				}
 			},
-			"required": ["webId", "privacyPreferences"]
+			"required": ["webId", "strict", "privacyPreferences"]
 		}
 	}
 }

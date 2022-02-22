@@ -29,7 +29,6 @@ export class ConfigurationManager {
 
   getPreferenceOf(webId: String): UserPreference | undefined {
     if (this.config == undefined) return undefined;
-    this.log.warn(`Is array? ${Array.isArray(this.config)}`);
     let arr = (this.config as Array<UserPreference>).filter(
       (up) => up.webId == webId
     );

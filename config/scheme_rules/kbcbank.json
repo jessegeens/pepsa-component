@@ -1,0 +1,58 @@
+{
+    "schemeName": "KBCTransactionData",
+     "detector": {
+         "contentRepresentation": "json",
+         "mechanism": {
+             "mechanismName": "containernameExact",
+             "value": "kbc-bank"
+         } },
+     "transformations":[ 
+         {
+             "level": 1,
+             "tactics": []
+         }, {
+        "level": 4,
+        "tactics": [ {
+                "field": "accountOwner",
+                "fieldType": "string",
+                "transformation": {
+                    "transformationName": "pseudonymization",
+                    "pseudonym": "J.G."
+                }
+            }, {
+                "field": "IBAN",
+                "fieldType": "string",
+                "transformation": {
+                    "transformationName": "pseudonymization",
+                    "pseudonym": "BE42429824824354"
+                }
+            },
+            {
+                "field": "saldo",
+                "fieldType": "float",
+                "transformation": {
+                    "transformationName": "numAggregation",
+                    "aggregationBounds": 10
+                }
+            },
+            {
+                "field": "from",
+                "fieldType": "string",
+                "transformation": {
+                    "transformationName": "pseudonymization",
+                    "pseudonym": "BE42429824824354",
+                    "equalsCondition": ["BE66123456783456"]
+                }
+            },
+            {
+                "field": "amount",
+                "fieldType": "float",
+                "transformation": {
+                    "transformationName": "numAggregation",
+                    "aggregationBounds": 10
+                }
+            }
+        ]
+    }
+    ]
+ }

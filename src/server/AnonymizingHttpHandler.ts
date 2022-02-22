@@ -118,27 +118,39 @@ export class AnonymizingHttpHandler extends OperationHttpHandler {
 
     let resource = this.operationHandler.handleSafe(input);
 
-    if (operation.method == "GET" && credentials.agent != undefined) {
+    if (
+      operation.method == "GET" &&
+      credentials.agent != undefined &&
+      credentials.agent.webId != undefined
+    ) {
       let res = await resource;
       if (res == undefined || res.data == undefined) return resource;
       if (res.statusCode != 200) return resource;
-      let data = "censored-data\n";
-      this.dataTreatmentHandler.treatData({
-        rawData: data,
-        owner: credentials.agent.webId ?? "None",
-        resource: operation.target.path,
-        timestamp: Date.now(),
-        userPreference: this.configurationManager.getPreferenceOf(
-          credentials.agent.webId ?? ""
-        ) ?? {
-          webId: "",
-          privacyPreferences: { default: 0, schemes: new Map() },
-        },
-      });
+      let userPreference = this.configurationManager.getPreferenceOf(
+        credentials.agent.webId
+      );
+      // User is not registered to use PePSA middleware
+      if (userPreference == undefined) return resource;
+      //let data = "censored-data\n";
+      let syncResource = await resource;
+
+      if (syncResource?.data == undefined) return resource;
+
       this.logger.info(
         `Intercepting data request for user ${credentials.agent.webId} for file ${operation.target.path}`
       );
-      let gs: Guarded<internal.Readable> = guardedStreamFrom(data, {});
+      let dataResponse = await this.dataTreatmentHandler.treatData({
+        rawData: syncResource.data,
+        owner: credentials.agent.webId,
+        resource: operation.target.path,
+        timestamp: Date.now(),
+        userPreference: userPreference,
+      });
+      if (dataResponse.treatedData == undefined) return resource;
+      let gs: Guarded<internal.Readable> = guardedStreamFrom(
+        dataResponse.treatedData,
+        {}
+      );
       return new OkResponseDescription(
         res.metadata ?? new RepresentationMetadata(),
         gs
