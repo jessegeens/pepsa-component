@@ -34,7 +34,7 @@ export class RuleEncapsulator {
         : Array.from(privacyPrefs.schemes?.keys()).includes(dataScheme)
         ? privacyPrefs.schemes.get(dataScheme)!
         : privacyPrefs.default;
-    this.log.warn(`Privacy level is ${privacyLevel}`);
+    this.log.info(`Privacy level is ${privacyLevel}`);
     let schemeRules = this.configMgr
       .getSchemeRules()
       .find((rule) => rule.schemeName == dataScheme);

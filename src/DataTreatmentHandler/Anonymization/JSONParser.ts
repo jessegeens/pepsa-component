@@ -1,47 +1,90 @@
 import { EncapsulatedData } from "../EncapsulatedData";
 import { TacticParser } from "./TacticParser";
-import { PrivacyTacticRule } from "../../ConfigurationManager/PrivacyTactic";
+import {
+  PrivacyTactic,
+  PrivacyTacticRule,
+} from "../../ConfigurationManager/PrivacyTactic";
 import { getLoggerFor, Logger } from "@solid/community-server";
 import { InvalidRuleError } from "../../Errors/InvalidRuleError";
 import { UnimplementedError } from "../../Errors/UnimplementedError";
+import jp from "jsonpath";
 
+export type JSONType =
+  | string
+  | number
+  | boolean
+  | Object
+  | Array<JSONType>
+  | undefined;
 export class JSONParser extends TacticParser {
   parseTactics(data: EncapsulatedData): string {
     let concreteTactics: PrivacyTacticRule[] = data.transformation.tactics;
     let parsedData: object = JSON.parse(data.rawData);
-    let entries: [string, any][] = Object.entries(parsedData);
+
     for (let rule of concreteTactics) {
-      this.log.info(`Parsing rule for ${rule.field}`);
-      let field = rule.field;
-      if (entries.map(([k, _]) => k).includes(field)) {
-        let idx = entries.map(([k, _]) => k).indexOf(field);
-        let val = this.parseRule(entries[idx][1], rule);
-        if (val == undefined) entries.splice(idx);
-        else entries[idx] = [entries[idx][0], val];
-      }
+      this.log.verbose(
+        `Parsing rule ${rule.transformation} for field ${rule.field}`
+      );
+      jp.apply(
+        parsedData,
+        rule.field,
+        this.getMatchingFunc(rule.transformation)
+      );
     }
-    return JSON.stringify(Object.fromEntries(entries));
+    return JSON.stringify(parsedData);
   }
 
-  parseRule(value: any, rule: PrivacyTacticRule): any {
-    switch (rule.transformation.transformationName) {
+  getMatchingFunc(tactic: PrivacyTactic): (val: JSONType) => JSONType {
+    switch (tactic.transformationName) {
       case "pseudonymization":
-        return rule.transformation.pseudonym;
+        return !this.hasCondition(tactic.equalsCondition)
+          ? (_) => tactic.pseudonym
+          : (v) =>
+              v == undefined
+                ? undefined
+                : tactic.equalsCondition.includes(v.toString())
+                ? tactic.pseudonym
+                : v;
       case "remove":
-        return undefined;
+        return !this.hasCondition(tactic.equalsCondition)
+          ? (_) => undefined
+          : (v) =>
+              v == undefined
+                ? undefined
+                : tactic.equalsCondition.includes(v.toString())
+                ? undefined
+                : v;
       case "random":
-        return this.randomString(8);
+        return !this.hasCondition(tactic.equalsCondition)
+          ? (v) => this.randomString(v?.toString().length ?? 8)
+          : (v) =>
+              v == undefined
+                ? undefined
+                : tactic.equalsCondition.includes(v.toString())
+                ? this.randomString(v?.toString().length ?? 8)
+                : v;
       case "numAggregation":
-        if (!(typeof value === "number"))
-          throw new InvalidRuleError(
-            `Cannot perform numerical aggregation on value of type ${typeof value}`
-          );
-        if (rule.transformation.aggregationBounds == 0) return 0;
-        return this.valueInBounds(value, rule.transformation.aggregationBounds);
-      case "strAggregation":
-        throw new UnimplementedError(
-          "String aggregation is not implemented yet"
-        );
+        return (value) => {
+          if (!(typeof value === "number"))
+            throw new InvalidRuleError(
+              `Cannot perform numerical aggregation on value of type ${typeof value}`
+            );
+          if (this.hasCondition(tactic.equalsCondition)) {
+            if (tactic.equalsCondition.includes(value.toString())) {
+              return this.valueInBounds(value, tactic.aggregationBounds);
+            } else return value;
+          }
+          if (tactic.aggregationBounds == 0) return 0;
+          return this.valueInBounds(value, tactic.aggregationBounds);
+        };
+      default:
+        return (v) => v;
     }
+  }
+
+  hasCondition(equalsCondition: string[]): boolean {
+    if (equalsCondition == undefined) return false;
+    if (equalsCondition.length == 0) return false;
+    return true;
   }
 }
