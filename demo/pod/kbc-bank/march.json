@@ -1,0 +1,87 @@
+{
+    "accountOwner": "Jesse Geens",
+    "IBAN": "BE66123456783456",
+    "saldo": 665.53,
+    "currency": "EUR",
+    "history": [
+        {
+            "from": "BE17954824458821",
+            "to": "BE66123456783456",
+            "from_name": "Mark Jansen",
+            "to_name": "Jesse Geens",
+            "amount": 33.7,
+            "timestamp": 1645447425,
+            "description": "Terugbetaling"
+        },
+        {
+            "from": "BE66123456783456",
+            "to": "BE15954347627130",
+            "from_name": "Jesse Geens",
+            "to_name": "Stefanie Smits",
+            "amount": 10.0,
+            "timestamp": 1645440365,
+            "description": "Drankjes café"
+        },
+        {
+            "from": "BE66123456783456",
+            "to": "BE25549273381982",
+            "from_name": "Jesse Geens",
+            "to_name": "Alma VZW",
+            "amount": 5.8,
+            "timestamp": 1645438015,
+            "description": "5XKD7BW6A"
+        },
+        {
+            "from": "BE66123456783456",
+            "to": "NL74INGB2847123288",
+            "from_name": "Jesse Geens",
+            "to_name": "Bol.com",
+            "amount": 40.1,
+            "timestamp": 1645433784
+        },
+        {
+            "from": "BE66123456783456",
+            "to": "BE41735381959110",
+            "from_name": "Jesse Geens",
+            "to_name": "Zalando NV/SA",
+            "amount": 80.0,
+            "timestamp": 1645432555,
+            "description": "+++ 012/3456/78910 +++"
+        },
+        {
+            "from": "BE66123456783456",
+            "to": "BE62456582827961",
+            "from_name": "Jesse Geens",
+            "to_name": "Acco Heverlee VZW",
+            "amount": 25.8,
+            "timestamp": 1645430152
+        },
+        {
+            "from": "BE81953144457924",
+            "to": "BE66123456783456",
+            "from_name": "Jesse Geens",
+            "to_name": "Jesse Geens",
+            "amount": 100,
+            "timestamp": 1645426440,
+            "description": "Geld lenen spaarrekening"
+        },
+        {
+            "from": "BE66123456783456",
+            "to": "LU390103488692433145",
+            "from_name": "Jesse Geens",
+            "to_name": "OpenLux Services Ltd.",
+            "amount": 5643.07,
+            "timestamp": 164523897,
+            "description": "Ontduiking belastingen"
+        },
+        {
+            "from": "BE66123456783456",
+            "to": "BE18233627319565",
+            "from_name": "Jesse Geens",
+            "to_name": "Ali Baba Kebab Leuven",
+            "amount": 9,
+            "timestamp": 1645421353,
+            "description": "a2ViYWIgZmV0YSBjb2NrdGFpbA"
+        }
+    ]
+}
