@@ -65,12 +65,25 @@
             },
             "parserSelector": {
               "@id": "urn:pepsa-component:default:ParserSelector",
-              "@type": "ParserSelector"
+              "@type": "ParserSelector",
+              "parsers": [
+                {
+                  "@id": "urn:pepsa-component:default:JSONParser",
+                  "@type": "JSONParser"
+                }, {
+                  "@id": "urn:pepsa-component:default:XMLParser",
+                  "@type": "XMLParser"
+                }
+              ]
             }
           },
           "args_configurationManager": {
             "@id": "urn:pepsa-component:default:ConfigurationManager",
-            "@type": "ConfigurationManager"
+            "@type": "ConfigurationManager",
+            "rootScheme": "../../config/schema/root.json",
+            "detectionScheme": "../../config/schema/detection.json",
+            "rootConfig": "../../config/pepsa-config.json",
+            "schemeRules": "../../config/scheme_rules"
           }
         }
       }

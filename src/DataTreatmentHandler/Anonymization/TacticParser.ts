@@ -1,4 +1,5 @@
 import { getLoggerFor, Logger } from "@solid/community-server";
+import { ContentRepresentation } from "../ContentRepresentation";
 import { EncapsulatedData } from "../EncapsulatedData";
 
 export abstract class TacticParser {
@@ -24,6 +25,8 @@ export abstract class TacticParser {
    * ```
    */
   abstract parseTactics(data: EncapsulatedData): string;
+
+  abstract parses(): ContentRepresentation;
 
   /**
    * Generate a random string of length `len`

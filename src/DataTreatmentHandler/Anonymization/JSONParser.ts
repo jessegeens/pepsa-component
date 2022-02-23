@@ -6,6 +6,7 @@ import {
 } from "../../ConfigurationManager/PrivacyTactic";
 import { InvalidRuleError } from "../../Errors/InvalidRuleError";
 import jp from "jsonpath";
+import { ContentRepresentation } from "../ContentRepresentation";
 
 export type JSONType =
   | string
@@ -15,6 +16,10 @@ export type JSONType =
   | Array<JSONType>
   | undefined;
 export class JSONParser extends TacticParser {
+  parses(): ContentRepresentation {
+    return ContentRepresentation.JSON;
+  }
+
   parseTactics(data: EncapsulatedData): string {
     let concreteTactics: PrivacyTacticRule[] = data.transformation.tactics;
     let parsedData: object = JSON.parse(data.rawData);

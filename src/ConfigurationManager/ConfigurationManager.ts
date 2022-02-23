@@ -11,8 +11,8 @@ import schema from "json-schema";
  * and software configuration.
  */
 export class ConfigurationManager {
-  private rootSchemaPath: string = "../../config/schema/root.json";
-  private detectionSchemaPath: string = "../../config/schema/detection.json";
+  private rootSchemaPath: string;
+  private detectionSchemaPath: string;
   private config?: UserPreference[];
   private rules: SchemeRule[] = [];
   private log: Logger;
@@ -35,12 +35,16 @@ export class ConfigurationManager {
     return arr.length > 0 ? arr[0] : undefined;
   }
 
-  constructor() {
+  constructor(
+    rootScheme: string,
+    detectionScheme: string,
+    rootConfig: string,
+    schemeRules: string
+  ) {
     this.log = getLoggerFor(this);
-    this.loadConfigurations(
-      "../../config/pepsa-config.json",
-      "../../config/scheme_rules"
-    );
+    this.rootSchemaPath = rootScheme;
+    this.detectionSchemaPath = detectionScheme;
+    this.loadConfigurations(rootConfig, schemeRules);
   }
 
   /**

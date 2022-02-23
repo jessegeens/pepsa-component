@@ -2,7 +2,7 @@
     "userPreferences": [
         {
             "webId": "http://localhost:3000/jesse/profile/card#me", 
-            "strict": true,
+            "strict": false,
             "privacyPreferences": {
                 "default": 4
             }
