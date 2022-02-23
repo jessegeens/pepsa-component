@@ -1,6 +1,7 @@
 import { getLoggerFor, Logger } from "@solid/community-server";
 import internal from "stream";
 import { ConfigurationManager } from "../ConfigurationManager/ConfigurationManager";
+import { NoSuchDataSchemeError } from "../Errors/NoSuchDataSchemeError";
 
 import { ParserSelector } from "./Anonymization/ParserSelector";
 import { DataTreatmentRequest } from "./DataTreatmentRequest";
@@ -17,10 +18,18 @@ import { RuleEncapsulator } from "./Preparation/RuleEncapsulator";
 export class DataTreatmentHandler {
   private readonly log: Logger;
   private readonly configMgr: ConfigurationManager;
+  private readonly ruleEncapsulator: RuleEncapsulator;
+  private readonly parserSelector: ParserSelector;
 
-  constructor(configMgr: ConfigurationManager) {
+  constructor(
+    configMgr: ConfigurationManager,
+    ruleEncapsulator: RuleEncapsulator,
+    parserSelector: ParserSelector
+  ) {
     this.log = getLoggerFor(this);
     this.configMgr = configMgr;
+    this.ruleEncapsulator = ruleEncapsulator;
+    this.parserSelector = parserSelector;
   }
 
   async treatData(
@@ -35,19 +44,23 @@ export class DataTreatmentHandler {
     );
     // No data scheme found, only possible when in non-strict mode
     // In this case, the raw data can just be returned without modifying it
-    if (dataScheme == undefined)
+
+    if (dataScheme == undefined && !request.userPreference.strict)
       return {
-        treatedData: await this.stringifyStream(request.rawData),
+        treatedData: stringifiedData,
         rawData: request.rawData,
         timestamp: request.timestamp,
         userPreference: request.userPreference,
         resource: request.resource,
         owner: request.owner,
       };
+    else if (dataScheme == undefined)
+      throw new NoSuchDataSchemeError(
+        `Could not find data scheme matching requested resource`
+      );
     this.log.info(`Detected datascheme: ${dataScheme}`);
-    let ruleEncapsulator = new RuleEncapsulator(this.configMgr);
 
-    let privacyTactics = ruleEncapsulator.encapsulate(
+    let privacyTactics = this.ruleEncapsulator.encapsulate(
       dataScheme,
       request.userPreference.privacyPreferences
     );
@@ -61,8 +74,7 @@ export class DataTreatmentHandler {
       transformation: privacyTactics,
     };
 
-    let parser = new ParserSelector();
-    let parsedData = parser.parse(data);
+    let parsedData = this.parserSelector.parse(data);
     let responseData: DataTreatmentRequest = {
       treatedData: parsedData,
       rawData: request.rawData,

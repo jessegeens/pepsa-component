@@ -57,7 +57,16 @@
           "args_dataTreatmentHandler": {
             "@id": "urn:pepsa-component:default:DataTreatmentHandler",
             "@type": "DataTreatmentHandler",
-            "configMgr": { "@id": "urn:pepsa-component:default:ConfigurationManager" }
+            "configMgr": { "@id": "urn:pepsa-component:default:ConfigurationManager" },
+            "ruleEncapsulator": {
+              "@id": "urn:pepsa-component:default:RuleEncapsulator",
+              "@type": "RuleEncapsulator",
+              "configMgr": { "@id": "urn:pepsa-component:default:ConfigurationManager" }
+            },
+            "parserSelector": {
+              "@id": "urn:pepsa-component:default:ParserSelector",
+              "@type": "ParserSelector"
+            }
           },
           "args_configurationManager": {
             "@id": "urn:pepsa-component:default:ConfigurationManager",
