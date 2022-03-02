@@ -75,7 +75,7 @@
 				"properties": {
 					"transformationName": {
 						"type": "string",
-						"enum": ["remove", "pseudonymization", "numAggregation", "strAggregation", "random"]
+						"enum": ["remove", "pseudonym", "perturbation", "hash", "encrypted", "random"]
 					},
 					"pseudonym": {
 						"type": "string",
@@ -85,9 +85,9 @@
 						"type": "array",
 						"description": "Only perform this transformation if the value is in the array"
 					},
-					"aggregationBounds": {
+					"perturbationFactor": {
 						"type": "number",
-						"description": "The maximum difference between the aggregated value and the orginial value. For example, if aggregationBounds is 1.1, then for the value any difference of 10% is allowed, i.e., the resulting value will lie between 63 and 77"
+						"description": "The maximum difference between the perturbed value and the orginial value. For example, if perturbationFactor is 1.1, then for the value any difference of 10% is allowed, i.e., the resulting value will lie between 63 and 77"
 					}
 				},
 				"required": ["transformationName"],
@@ -102,10 +102,10 @@
 					},
                   	{
 					"if": {
-						"properties": { "transformationName": { "const": "numAggregation" } }
+						"properties": { "transformationName": { "const": "perturbation" } }
 					},
 					"then": {
-						"required": ["aggregationBounds"]
+						"required": ["perturbationFactor"]
 					}
 					}
 				]
