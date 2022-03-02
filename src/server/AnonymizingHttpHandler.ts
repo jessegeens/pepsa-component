@@ -126,7 +126,7 @@ export class AnonymizingHttpHandler extends OperationHttpHandler {
       let res = await resource;
       if (res == undefined || res.data == undefined) return resource;
       if (res.statusCode != 200) return resource;
-      let userPreference = this.configurationManager.getPreferenceOf(
+      let userPreference = await this.configurationManager.getPreferenceOf(
         credentials.agent.webId
       );
       // User is not registered to use PePSA middleware
