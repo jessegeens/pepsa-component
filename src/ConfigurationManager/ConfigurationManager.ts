@@ -4,6 +4,7 @@ import { SchemaValidationError } from "../Errors/SchemaValidationError";
 import { UserConfig, UserPreference } from "./UserPreference";
 import { SchemeRule } from "./SchemeRule";
 import schema from "json-schema";
+import { UserPreferenceStore } from "./UserPreferenceStore";
 
 /**
  * The ConfigurationManager is a class responsible for parsing and storing all
@@ -15,6 +16,7 @@ export class ConfigurationManager {
   private detectionSchemaPath: string;
   private config?: UserPreference[];
   private rules: SchemeRule[] = [];
+  private userPrefStore: UserPreferenceStore;
   private log: Logger;
 
   /**
@@ -27,24 +29,27 @@ export class ConfigurationManager {
     return this.rules;
   }
 
-  getPreferenceOf(webId: String): UserPreference | undefined {
-    if (this.config == undefined) return undefined;
+  async getPreferenceOf(webId: String): Promise<UserPreference | undefined> {
+    return this.userPrefStore.getPreference(webId);
+    /*if (this.config == undefined) return undefined;
     let arr = (this.config as Array<UserPreference>).filter(
       (up) => up.webId == webId
     );
-    return arr.length > 0 ? arr[0] : undefined;
+    return arr.length > 0 ? arr[0] : undefined;*/
   }
 
   constructor(
     rootScheme: string,
     detectionScheme: string,
     rootConfig: string,
-    schemeRules: string
+    schemeRules: string,
+    upf: UserPreferenceStore
   ) {
     this.log = getLoggerFor(this);
     this.rootSchemaPath = rootScheme;
     this.detectionSchemaPath = detectionScheme;
     this.loadConfigurations(rootConfig, schemeRules);
+    this.userPrefStore = upf;
   }
 
   /**
