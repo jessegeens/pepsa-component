@@ -39,7 +39,7 @@ export class JSONParser extends TacticParser {
 
   getMatchingFunc(tactic: PrivacyTactic): (val: JSONType) => JSONType {
     switch (tactic.transformationName) {
-      case "pseudonymization":
+      case "pseudonym":
         return !this.hasCondition(tactic.equalsCondition)
           ? (_) => tactic.pseudonym
           : (v) =>
@@ -66,7 +66,7 @@ export class JSONParser extends TacticParser {
                 : tactic.equalsCondition.includes(v.toString())
                 ? this.randomString(v?.toString().length ?? 8)
                 : v;
-      case "numAggregation":
+      case "perturbation":
         return (value) => {
           if (!(typeof value === "number"))
             throw new InvalidRuleError(
@@ -74,11 +74,11 @@ export class JSONParser extends TacticParser {
             );
           if (this.hasCondition(tactic.equalsCondition)) {
             if (tactic.equalsCondition.includes(value.toString())) {
-              return this.valueInBounds(value, tactic.aggregationBounds);
+              return this.valueInBounds(value, tactic.perturbationFactor);
             } else return value;
           }
-          if (tactic.aggregationBounds == 0) return 0;
-          return this.valueInBounds(value, tactic.aggregationBounds);
+          if (tactic.perturbationFactor == 0) return 0;
+          return this.valueInBounds(value, tactic.perturbationFactor);
         };
       default:
         return (v) => v;

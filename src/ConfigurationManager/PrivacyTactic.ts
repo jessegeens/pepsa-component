@@ -20,12 +20,13 @@ export type PrivacyTactic = {
   transformationName: TransformationName;
   pseudonym?: string;
   equalsCondition: string[];
-  aggregationBounds: number;
+  perturbationFactor: number;
 };
 
 export type TransformationName =
   | "remove"
-  | "pseudonymization"
-  | "numAggregation"
-  | "strAggregation"
+  | "pseudonym"
+  | "perturbation"
+  | "hash"
+  | "encrypt"
   | "random";

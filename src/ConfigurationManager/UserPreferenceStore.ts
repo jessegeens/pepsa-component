@@ -29,15 +29,20 @@ export class UserPreferenceStore {
     if (this.hasPreferences(webid) == true)
       return this.webidMap.get(webid) as UserPreference;
     let identifier: ResourceIdentifier = {
-      path: "",
+      path: webid.replace("card#me", "pepsa.json"),
     };
     try {
       let prefsRep = await this.resourcestore.getRepresentation(identifier, {});
       let prefs = await stringifyStream(prefsRep.data);
       let userPreference = JSON.parse(prefs) as UserPreference;
       this.webidMap.set(webid, userPreference);
+      this.log.info(`Found preferences of ${webid}`);
       return userPreference;
     } catch (e) {
+      if (typeof e == "object")
+        this.log.info(
+          `Did not find preferences of ${webid}, error is ${e?.toString()}`
+        );
       this.webidMap.set(webid, "None");
       return undefined;
     }

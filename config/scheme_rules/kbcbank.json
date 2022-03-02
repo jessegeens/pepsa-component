@@ -16,7 +16,7 @@
                 "field": "accountOwner",
                 "fieldType": "string",
                 "transformation": {
-                    "transformationName": "pseudonymization",
+                    "transformationName": "pseudonym",
                     "pseudonym": "J.G."
                 }
             }, 
@@ -24,7 +24,7 @@
                 "field": "IBAN",
                 "fieldType": "string",
                 "transformation": {
-                    "transformationName": "pseudonymization",
+                    "transformationName": "pseudonym",
                     "pseudonym": "BE42429824824354"
                 }
             },
@@ -32,15 +32,15 @@
                 "field": "saldo",
                 "fieldType": "float",
                 "transformation": {
-                    "transformationName": "numAggregation",
-                    "aggregationBounds": 10
+                    "transformationName": "perturbation",
+                    "perturbationFactor": 1.1
                 }
             },
             {
                 "field": "$.history[*].from",
                 "fieldType": "string",
                 "transformation": {
-                    "transformationName": "pseudonymization",
+                    "transformationName": "pseudonym",
                     "pseudonym": "BE42429824824354",
                     "equalsCondition": ["BE66123456783456"]
                 }
@@ -49,7 +49,7 @@
                 "field": "$.history[*].to",
                 "fieldType": "string",
                 "transformation": {
-                    "transformationName": "pseudonymization",
+                    "transformationName": "pseudonym",
                     "pseudonym": "BE42429824824354",
                     "equalsCondition": ["BE66123456783456"]
                 }
@@ -58,7 +58,7 @@
                 "field": "$.history[*].from_name",
                 "fieldType": "string",
                 "transformation": {
-                    "transformationName": "pseudonymization",
+                    "transformationName": "pseudonym",
                     "pseudonym": "J.G.",
                     "equalsCondition": ["Jesse Geens"]
                 }
@@ -67,7 +67,7 @@
                 "field": "$.history[*].to_name",
                 "fieldType": "string",
                 "transformation": {
-                    "transformationName": "pseudonymization",
+                    "transformationName": "pseudonym",
                     "pseudonym": "J.G.",
                     "equalsCondition": ["Jesse Geens"]
                 }
@@ -76,7 +76,7 @@
                 "field": "$.history[*].to_name",
                 "fieldType": "string",
                 "transformation": {
-                    "transformationName": "pseudonymization",
+                    "transformationName": "pseudonym",
                     "pseudonym": "Very legal service",
                     "equalsCondition": ["OpenLux Services Ltd."]
                 }
@@ -93,8 +93,8 @@
                 "field": "$.history[*].amount",
                 "fieldType": "float",
                 "transformation": {
-                    "transformationName": "numAggregation",
-                    "aggregationBounds": 10
+                    "transformationName": "perturbation",
+                    "perturbationFactor": 10
                 }
             }
         ]

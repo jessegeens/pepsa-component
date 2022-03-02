@@ -41,66 +41,29 @@ export class ConfigurationManager {
   constructor(
     rootScheme: string,
     detectionScheme: string,
-    rootConfig: string,
     schemeRules: string,
-    upf: UserPreferenceStore
+    ups: UserPreferenceStore
   ) {
     this.log = getLoggerFor(this);
     this.rootSchemaPath = rootScheme;
     this.detectionSchemaPath = detectionScheme;
-    this.loadConfigurations(rootConfig, schemeRules);
-    this.userPrefStore = upf;
+    this.loadConfigurations(schemeRules);
+    this.userPrefStore = ups;
   }
 
   /**
-   * This method loads the configuration files into the class.
-   * @param `rootFilePath` the path of the root configuration file, usually
-   * "../config/config.json"
+   * This method loads the scheme detection files into the class.
    * @param `detectionFilePath` the path of the folder containing the config
    * files for detection of data schemes, usually "../config/scheme_detection"
    */
-  loadConfigurations(rootFilePath: string, detectionFilesPath: string) {
+  loadConfigurations(detectionFilesPath: string) {
     const fs = require("fs");
     const path = require("path");
-    //let v = new schema.validate
-    //const log = getLoggerFor(this);
 
     /** Use `path.resolve(__dirname, "path/")` here because `fs.readFileSync`
      * is not file relative, see
      * https://stackoverflow.com/questions/44600943/fs-readfilesync-is-not-file-relative-node-js/44601028
      */
-
-    // Read root configuration
-    try {
-      const rawRootData = fs.readFileSync(
-        path.resolve(__dirname, rootFilePath)
-      );
-      const rootSchema = fs.readFileSync(
-        path.resolve(__dirname, this.rootSchemaPath)
-      );
-
-      if (schema.validate(rawRootData, rootSchema).valid) {
-        let cfg: UserConfig = JSON.parse(rawRootData);
-        this.config = cfg.userPreferences;
-      } else {
-        throw new SchemaValidationError(
-          `Root configuration file ${rootFilePath} 
-        does not adhere to schema ${this.rootSchemaPath}: ${
-            schema.validate(rawRootData, rootSchema).errors
-          }`
-        );
-      }
-    } catch (err: unknown) {
-      if (err instanceof Error) throw new FileError(err.message, rootFilePath);
-      else
-        throw new FileError(
-          `An unknown error has occured while trying to read the root config file at ${path.resolve(
-            __dirname,
-            rootFilePath
-          )}: ${err}`,
-          rootFilePath
-        );
-    }
 
     // Read detection config files
     const absDetectionFilesPath = path.resolve(__dirname, detectionFilesPath);
