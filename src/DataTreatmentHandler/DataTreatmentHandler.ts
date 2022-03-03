@@ -8,7 +8,7 @@ import { ParserSelector } from "./Anonymization/ParserSelector";
 import { DataTreatmentRequest } from "./DataTreatmentRequest";
 import { EncapsulatedData } from "./EncapsulatedData";
 import { DataSchemeDetector } from "./Preparation/DataSchemeDetector";
-import { RuleEncapsulator } from "./Preparation/RuleEncapsulator";
+import { TacticEncapsulator } from "./Preparation/TacticEncapsulator";
 
 /**
  * The `DataTreatmentHandler` forms the most important part of the application
@@ -19,17 +19,17 @@ import { RuleEncapsulator } from "./Preparation/RuleEncapsulator";
 export class DataTreatmentHandler {
   private readonly log: Logger;
   private readonly configMgr: ConfigurationManager;
-  private readonly ruleEncapsulator: RuleEncapsulator;
+  private readonly tacticEncapsulator: TacticEncapsulator;
   private readonly parserSelector: ParserSelector;
 
   constructor(
     configMgr: ConfigurationManager,
-    ruleEncapsulator: RuleEncapsulator,
+    tacticEncapsulator: TacticEncapsulator,
     parserSelector: ParserSelector
   ) {
     this.log = getLoggerFor(this);
     this.configMgr = configMgr;
-    this.ruleEncapsulator = ruleEncapsulator;
+    this.tacticEncapsulator = tacticEncapsulator;
     this.parserSelector = parserSelector;
   }
 
@@ -61,7 +61,7 @@ export class DataTreatmentHandler {
       );
     this.log.info(`Detected datascheme: ${dataScheme}`);
 
-    let privacyTactics = this.ruleEncapsulator.encapsulate(
+    let privacyTactics = this.tacticEncapsulator.encapsulate(
       dataScheme,
       request.userPreference.privacyPreferences
     );

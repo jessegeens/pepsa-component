@@ -58,9 +58,9 @@
             "@id": "urn:pepsa-component:default:DataTreatmentHandler",
             "@type": "DataTreatmentHandler",
             "configMgr": { "@id": "urn:pepsa-component:default:ConfigurationManager" },
-            "ruleEncapsulator": {
-              "@id": "urn:pepsa-component:default:RuleEncapsulator",
-              "@type": "RuleEncapsulator",
+            "tacticEncapsulator": {
+              "@id": "urn:pepsa-component:default:TacticEncapsulator",
+              "@type": "TacticEncapsulator",
               "configMgr": { "@id": "urn:pepsa-component:default:ConfigurationManager" }
             },
             "parserSelector": {

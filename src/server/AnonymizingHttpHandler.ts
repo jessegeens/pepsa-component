@@ -56,6 +56,8 @@ export interface AnonymizingHttpHandlerArgs {
  *  - Extracting the required permissions.
  *  - Reading the allowed permissions for the credentials.
  *  - Validating if this operation is allowed.
+ *  - Verifying if the requested operation falls within PePSA's scope
+ *    -> If so, treats the requested data with the {@link DataTreatmentHandler}
  */
 export class AnonymizingHttpHandler extends OperationHttpHandler {
   private readonly logger = getLoggerFor(this);

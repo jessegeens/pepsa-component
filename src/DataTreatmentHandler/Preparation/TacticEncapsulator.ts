@@ -15,7 +15,7 @@ import { getLoggerFor, Logger } from "@solid/community-server";
  * constructed that  contains all necessary information for the correct
  * {@link TacticParser} to complete its work.
  */
-export class RuleEncapsulator {
+export class TacticEncapsulator {
   private readonly configMgr: ConfigurationManager;
   private readonly log: Logger;
 

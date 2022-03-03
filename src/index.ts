@@ -1,7 +1,7 @@
 /** Main components */
 export * from "./server/AnonymizingHttpHandler";
 export * from "./DataTreatmentHandler/DataTreatmentHandler";
-export * from "./DataTreatmentHandler/Preparation/RuleEncapsulator";
+export * from "./DataTreatmentHandler/Preparation/TacticEncapsulator";
 export * from "./ConfigurationManager/ConfigurationManager";
 export * from "./ConfigurationManager/UserPreferenceStore";
 
