@@ -18,10 +18,10 @@ export class ParserSelector {
     this.log = getLoggerFor(this);
   }
 
-  parse(data: EncapsulatedData): string {
+  async parse(data: EncapsulatedData): Promise<string> {
     for (let parser of this.parsers) {
       if (parser.parses() == data.contentRepresentation)
-        return parser.parseTactics(data);
+        return await parser.parseTactics(data);
     }
     throw new UnsupportedContentRepresentationError(
       `No parser installed for content-representation ${data.contentRepresentation}`

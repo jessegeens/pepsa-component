@@ -8,21 +8,23 @@
              "value": ".tcx"
          } },
      "transformations":[ {
-         "level": 3,
+         "level": 1,
+         "tactics": []
+     }, {
+         "level": 4,
          "tactics": [ {
-             "field": "AverageHeartRateBpm",
-               "fieldType": "integer",
+             "field": "$.TrainingCenterDatabase.Activities[*].Activity[*].Lap[*].AverageHeartRateBpm",
+               "fieldType": "string",
                "transformation": {
                  "transformationName": "remove"
              }
-         }, {
-             "field": "Cadence",
-               "fieldType": "integer",
-               "transformation": {
-                 "transformationName": "numAggregation",
-                   "aggregationBounds": 10
-             }
-         } ]
+          }, {
+            "field": "$.TrainingCenterDatabase.Activities[*].Activity[*].Lap[*].MaximumHeartRateBpm",
+              "fieldType": "string",
+              "transformation": {
+                "transformationName": "remove"
+            }
+          } ]
        }
      ]
  }

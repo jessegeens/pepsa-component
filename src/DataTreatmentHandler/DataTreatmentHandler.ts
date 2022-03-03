@@ -75,7 +75,7 @@ export class DataTreatmentHandler {
       transformation: privacyTactics,
     };
 
-    let parsedData = this.parserSelector.parse(data);
+    let parsedData = await this.parserSelector.parse(data);
     let responseData: DataTreatmentRequest = {
       treatedData: parsedData,
       rawData: request.rawData,

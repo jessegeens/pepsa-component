@@ -20,7 +20,7 @@ export class JSONParser extends TacticParser {
     return ContentRepresentation.JSON;
   }
 
-  parseTactics(data: EncapsulatedData): string {
+  async parseTactics(data: EncapsulatedData): Promise<string> {
     let concreteTactics: PrivacyTacticRule[] = data.transformation.tactics;
     let parsedData: object = JSON.parse(data.rawData);
 
@@ -70,7 +70,7 @@ export class JSONParser extends TacticParser {
         return (value) => {
           if (!(typeof value === "number"))
             throw new InvalidRuleError(
-              `Cannot perform numerical aggregation on value of type ${typeof value}`
+              `Cannot perform perturbation on value of type ${typeof value}`
             );
           if (this.hasCondition(tactic.equalsCondition)) {
             if (tactic.equalsCondition.includes(value.toString())) {
@@ -83,11 +83,5 @@ export class JSONParser extends TacticParser {
       default:
         return (v) => v;
     }
-  }
-
-  hasCondition(equalsCondition: string[]): boolean {
-    if (equalsCondition == undefined) return false;
-    if (equalsCondition.length == 0) return false;
-    return true;
   }
 }

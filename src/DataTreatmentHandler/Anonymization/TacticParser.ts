@@ -2,6 +2,9 @@ import { getLoggerFor, Logger } from "@solid/community-server";
 import { ContentRepresentation } from "../ContentRepresentation";
 import { EncapsulatedData } from "../EncapsulatedData";
 
+/**
+ * A TacticParser parses {@link PrivacyTacticRule}s for a specific {@link ContentRepresentation}.
+ */
 export abstract class TacticParser {
   protected readonly log: Logger;
 
@@ -24,7 +27,7 @@ export abstract class TacticParser {
    * }
    * ```
    */
-  abstract parseTactics(data: EncapsulatedData): string;
+  abstract parseTactics(data: EncapsulatedData): Promise<string>;
 
   abstract parses(): ContentRepresentation;
 
@@ -62,5 +65,18 @@ export abstract class TacticParser {
     let upper = value * bounds;
     let lower = value / bounds;
     return Math.random() * (upper - lower) + lower;
+  }
+
+  /**
+   * Return whether a TacticRule has a condition
+   *
+   * @param equalsCondition A list of strings, to which the field should be equal
+   * in order to satisfy the condition
+   * @returns true if the tactic rule has a condition, false otherwise
+   */
+  hasCondition(equalsCondition: string[]): boolean {
+    if (equalsCondition == undefined) return false;
+    if (equalsCondition.length == 0) return false;
+    return true;
   }
 }
