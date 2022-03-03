@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactJson from 'react-json-view'
+import ReactXml from 'react-xml-viewer'
 import "regenerator-runtime/runtime";
 
  import {
@@ -57,7 +58,7 @@ class DemoClientApp extends Component {
       fetchBody: "",
       session: session,
       sessionInfo: session.info, // FIXME: shouldn't duplicate this info!
-      isJson: false,
+      resultType: "none",
     };
 
     if (window.location.pathname === "/popup") {
@@ -178,7 +179,9 @@ class DemoClientApp extends Component {
       await this.state.session.fetch(this.state.fetchRoute, {})
     ).text();
     if(this.state.fetchRoute.includes(".json"))
-      this.setState({isJson: true})
+      this.setState({resultType: "json"})
+    else if (this.state.fetchRoute.includes(".tcx"))
+      this.setState({resultType: "xml"})
     else this.setState({isJson: false})
     if (this.state.session.isLoggedIn) {
       this.setState({ status: "dashboard", fetchBody: response });
@@ -395,7 +398,7 @@ class DemoClientApp extends Component {
   }
 
   htmlFetchResource() {
-    if(this.state.isJson) return (
+    if(this.state.resultType == "json") return (
       <form>
         <div style={style}>
           <input
@@ -409,8 +412,27 @@ class DemoClientApp extends Component {
         </div>
         <br></br>
         <div style={style}>
-          <strong>{this.state.isJson ? "JSON" : "Resource"}:</strong>
+          <strong>JSON:</strong>
           <ReactJson src={JSON.parse(this.state.fetchBody)} theme="monokai" />
+        </div>
+      </form>
+    )
+    else if(this.state.resultType == "xml" || this.state.resultType == "tcx") return (
+      <form>
+        <div style={style}>
+          <input
+            data-testid="fetch_uri_textbox"
+            size="80"
+            type="text"
+            value={this.state.fetchRoute}
+            onChange={(e) => this.setState({ fetchRoute: e.target.value })}
+          />
+          <button onClick={this.handleFetch}>Fetch</button>
+        </div>
+        <br></br>
+        <div style={style}>
+          <strong>XML:</strong>
+          <ReactXml xml={this.state.fetchBody}/>
         </div>
       </form>
     )
@@ -428,7 +450,7 @@ class DemoClientApp extends Component {
         </div>
         <br></br>
         <div style={style}>
-          <strong>{this.state.isJson ? "JSON" : "Resource"}:</strong>
+          <strong>XML:</strong>
           <pre data-testid="fetch_response_textbox">{this.state.fetchBody}</pre>
         </div>
       </form>
