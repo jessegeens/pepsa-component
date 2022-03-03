@@ -24,6 +24,13 @@
               "transformation": {
                 "transformationName": "remove"
             }
+          },
+          {
+            "field": "$.TrainingCenterDatabase.Activities[*].Activity[*].Lap[*].Track[*].Trackpoint[*].HeartRateBpm",
+              "fieldType": "string",
+              "transformation": {
+                "transformationName": "remove"
+            }
           } ]
        }
      ]
