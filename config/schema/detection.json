@@ -16,7 +16,7 @@
 			"contentRepresentation": {
 				"type": "string",
 				"description": "The content-representation of the input data. E.g. XML or JSON.",
-				"enum": ["xml", "json"]
+				"enum": ["xml", "json", "ttl"]
 			},
 			"scheme": {
 				"type": "string",

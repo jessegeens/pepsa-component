@@ -1,7 +1,7 @@
 {
   "name": "pepsa-component",
   "version": "0.1.0",
-  "description": "A componentsjs component to run the PePSA middleware on the solid community server",
+  "description": "A componentsjs component to run the PePSA middleware on the community solid server",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "author": "Jesse Geens <jesse.geens@gmail.com>",
