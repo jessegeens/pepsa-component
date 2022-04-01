@@ -16,3 +16,4 @@ export * from "./DataTreatmentHandler/Anonymization/TacticParser";
 // These are passed on to the ParserSelector through components.js
 export * from "./DataTreatmentHandler/Anonymization/XMLParser";
 export * from "./DataTreatmentHandler/Anonymization/JSONParser";
+export * from "./DataTreatmentHandler/Anonymization/TurtleParser";

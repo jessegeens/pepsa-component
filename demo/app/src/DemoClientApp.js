@@ -182,7 +182,7 @@ class DemoClientApp extends Component {
       this.setState({resultType: "json"})
     else if (this.state.fetchRoute.includes(".tcx"))
       this.setState({resultType: "xml"})
-    else this.setState({isJson: false})
+    else this.setState({resultType: "none"})
     if (this.state.session.isLoggedIn) {
       this.setState({ status: "dashboard", fetchBody: response });
     } else {
@@ -417,7 +417,7 @@ class DemoClientApp extends Component {
         </div>
       </form>
     )
-    else if(this.state.resultType == "xml" || this.state.resultType == "tcx") return (
+    else if(this.state.resultType == "xml") return (
       <form>
         <div style={style}>
           <input

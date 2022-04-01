@@ -83,7 +83,7 @@ export class AnonymizingHttpHandler extends OperationHttpHandler {
 
   public async handle(
     input: OperationHttpHandlerInput
-  ): Promise<ResponseDescription | undefined> {
+  ): Promise<ResponseDescription> {
     this.logger.warn("Injection success!");
     const { request, operation } = input;
     const credentials: CredentialSet =
