@@ -1,0 +1,117 @@
+{
+    "@context": [
+      "https://linkedsoftwaredependencies.org/bundles/npm/pepsa-component/^0.0.1/components/context.jsonld",
+      "https://linkedsoftwaredependencies.org/bundles/npm/@solid/community-server/^2.0.0/components/context.jsonld",
+      {
+        "pepsa-component": "urn:pepsa-component:default:",
+        "solid-server": "urn:solid-server:default:"
+      }
+    ],
+    "import": [
+        "files-scs:config/app/main/default.json",
+        "files-scs:config/app/init/default.json",
+        "files-scs:config/app/setup/required.json",
+        "files-scs:config/http/handler/default.json",
+        "files-scs:config/http/middleware/websockets.json",
+
+        "files-scs:config/http/static/default.json",
+        "files-scs:config/identity/access/public.json",
+        "files-scs:config/identity/email/default.json",
+        "files-scs:config/identity/handler/default.json",
+
+        "files-scs:config/identity/ownership/token.json",
+        "files-scs:config/identity/pod/static.json",
+        "files-scs:config/identity/registration/enabled.json",
+        
+        "files-scs:config/ldp/authentication/dpop-bearer.json",
+        "files-scs:config/ldp/authorization/webacl.json",
+        "files-scs:config/ldp/handler/default.json",
+        "files-scs:config/ldp/metadata-parser/default.json",
+        "files-scs:config/ldp/metadata-writer/default.json",
+        "files-scs:config/ldp/modes/default.json",
+        "files-scs:config/storage/backend/file.json",
+        "files-scs:config/storage/key-value/resource-store.json",
+        "files-scs:config/storage/middleware/default.json",
+        "files-scs:config/util/auxiliary/acl.json",
+        "files-scs:config/util/identifiers/suffix.json",
+        "files-scs:config/util/index/default.json",
+        "files-scs:config/util/logging/winston.json",
+        "files-scs:config/util/representation-conversion/default.json",
+        "files-scs:config/util/resource-locker/memory.json",
+        "files-scs:config/util/variables/default.json"
+    ],
+    "@graph": [
+      {
+        "comment": "The key/cert values should be replaces with paths to the correct files. The 'options' block can be removed if not needed.",
+        "@id": "urn:solid-server:default:ServerFactory",
+        "@type": "WebSocketServerFactory",
+        "baseServerFactory": {
+          "@id": "urn:solid-server:default:HttpServerFactory",
+          "@type": "BaseHttpServerFactory",
+          "handler": { "@id": "urn:solid-server:default:HttpHandler" },
+          "options_showStackTrace": { "@id": "urn:solid-server:default:variable:showStackTrace" },
+          "options_https": true,
+          "options_key": "/config/https/private.key",
+          "options_cert": "/config/https/certificate.crt"
+        },
+        "webSocketHandler": {
+          "@type": "UnsecureWebSocketsProtocol",
+          "source": { "@id": "urn:solid-server:default:ResourceStore" }
+        }
+      },
+      {
+        "comment": "The main entry point into the main Solid behaviour.",
+        "@id": "urn:solid-server:default:LdpHandler",
+        "@type": "ParsingHttpHandler",
+        "args_requestParser": { "@id": "urn:solid-server:default:RequestParser" },
+        "args_metadataCollector": { "@id": "urn:solid-server:default:OperationMetadataCollector" },
+        "args_errorHandler": { "@id": "urn:solid-server:default:ErrorHandler" },
+        "args_responseWriter": { "@id": "urn:solid-server:default:ResponseWriter" },
+        "args_operationHandler": {
+          "@type": "AnonymizingHttpHandler",
+          "args_credentialsExtractor": { "@id": "urn:solid-server:default:CredentialsExtractor" },
+          "args_modesExtractor": { "@id": "urn:solid-server:default:ModesExtractor" },
+          "args_permissionReader": { "@id": "urn:solid-server:default:PermissionReader" },
+          "args_authorizer": { "@id": "urn:solid-server:default:Authorizer" },
+          "args_operationHandler": { "@id": "urn:solid-server:default:OperationHandler" },
+          "args_dataTreatmentHandler": {
+            "@id": "urn:pepsa-component:default:DataTreatmentHandler",
+            "@type": "DataTreatmentHandler",
+            "configMgr": { "@id": "urn:pepsa-component:default:ConfigurationManager" },
+            "tacticEncapsulator": {
+              "@id": "urn:pepsa-component:default:TacticEncapsulator",
+              "@type": "TacticEncapsulator",
+              "configMgr": { "@id": "urn:pepsa-component:default:ConfigurationManager" }
+            },
+            "parserSelector": {
+              "@id": "urn:pepsa-component:default:ParserSelector",
+              "@type": "ParserSelector",
+              "parsers": [
+                {
+                  "@id": "urn:pepsa-component:default:JSONParser",
+                  "@type": "JSONParser"
+                }, {
+                  "@id": "urn:pepsa-component:default:XMLParser",
+                  "@type": "XMLParser"
+                }
+              ]
+            }
+          },
+          "args_configurationManager": {
+            "@id": "urn:pepsa-component:default:ConfigurationManager",
+            "@type": "ConfigurationManager",
+            "rootScheme": "../../config/schema/root.json",
+            "detectionScheme": "../../config/schema/detection.json",
+            "schemeRules": "../../config/scheme_rules",
+            "ups": {
+              "@id": "urn:pepsa-component:default:UserPreferenceStore",
+              "@type": "UserPreferenceStore",
+              "rs": {
+                "@id": "urn:solid-server:default:ResourceStore_Backend"
+              }
+            }
+          }
+        }
+      }
+    ]
+}
