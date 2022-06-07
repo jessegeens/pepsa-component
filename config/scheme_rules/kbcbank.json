@@ -24,8 +24,7 @@
                 "field": "IBAN",
                 "fieldType": "string",
                 "transformation": {
-                    "transformationName": "pseudonym",
-                    "pseudonym": "BE42429824824354"
+                    "transformationName": "hash"
                 }
             },
             {
