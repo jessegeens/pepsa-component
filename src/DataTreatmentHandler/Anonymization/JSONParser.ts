@@ -6,6 +6,7 @@ import {
 } from "../../ConfigurationManager/PrivacyTactic";
 import { InvalidRuleError } from "../../Errors/InvalidRuleError";
 import jp from "jsonpath";
+import { createHash, randomBytes, createCipheriv } from "crypto";
 import { ContentRepresentation } from "../ContentRepresentation";
 
 export type JSONType =
@@ -80,6 +81,33 @@ export class JSONParser extends TacticParser {
           if (tactic.perturbationFactor == 0) return 0;
           return this.valueInBounds(value, tactic.perturbationFactor);
         };
+      case "hash":
+        return !this.hasCondition(tactic.equalsCondition)
+          ? (v) =>
+              createHash("sha256")
+                .update(v?.toString() ?? "")
+                .digest("hex")
+          : (v) =>
+              v == undefined
+                ? undefined
+                : tactic.equalsCondition.includes(v.toString())
+                ? createHash("sha256")
+                    .update(v?.toString() ?? "")
+                    .digest("hex")
+                : v;
+      case "encrypt":
+        // TODO: update to allow keys to be stored in config file
+        const initVector = randomBytes(16);
+        const key = randomBytes(32);
+        const cipher = createCipheriv("aes-256-cbc", key, initVector);
+        return !this.hasCondition(tactic.equalsCondition)
+          ? (v) => cipher.update(v?.toString() ?? "", "utf-8", "hex")
+          : (v) =>
+              v == undefined
+                ? undefined
+                : tactic.equalsCondition.includes(v.toString())
+                ? cipher.update(v?.toString() ?? "", "utf-8", "hex")
+                : v;
       default:
         return (v) => v;
     }
