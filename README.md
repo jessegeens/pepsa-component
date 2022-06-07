@@ -10,11 +10,10 @@ PePSA is a plugin for the Community Solid Server that implements privacy filters
 
 The following features are underway:
 
-1. Implementations for the `hash` and `encrypted` transformations
-2. Allowing configuration files for a data type to be
+1. Allowing configuration files for a data type to be
    a. loaded from the user's pod, instead of being in the server config
    b. allow different privacy levels or configuration files for specific applications
-3. Implement support for performing these transformations to data represented in a serialized form of RDF, where attributes are targeted using queries (for example, using communica)
+2. Implement support for performing these transformations to data represented in a serialized form of RDF, where attributes are targeted using queries (for example, using communica)
 
 ## Running
 
