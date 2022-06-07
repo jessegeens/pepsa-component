@@ -12,7 +12,7 @@ export class XMLParser extends TacticParser {
   async parseTactics(data: EncapsulatedData): Promise<string> {
     //let cleanedData = data.replace("\ufeff", "");
     let parsedData: object = await xml2js.parseStringPromise(data.rawData);
-    //this.log.warn(`Parsed JSON: ${JSON.stringify(parsedData)}`);
+    this.log.warn(`Parsed JSON: ${JSON.stringify(parsedData)}`);
     let parsedJson = await new JSONParser().parseTactics({
       dataScheme: data.dataScheme,
       contentRepresentation: ContentRepresentation.JSON,
