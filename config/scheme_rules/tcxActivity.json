@@ -26,7 +26,7 @@
             }
           },
           {
-            "field": "$.TrainingCenterDatabase.Activities[*].Activity[*].Lap[*].Track[*].Trackpoint[*].HeartRateBpm",
+            "field": "$.TrainingCenterDatabase.Activities[*].Activity[*].Lap[*].Track[*].TrackPoint[*].HeartRateBpm",
               "fieldType": "string",
               "transformation": {
                 "transformationName": "remove"
